@@ -1,0 +1,71 @@
+[
+  {
+    "text": "Is this a question?",
+    "id": 1,
+    "answerId": 1,
+    "answers": [
+      {
+        "id": 1,
+        "text": "Yes"
+      },
+      {
+        "id": 2,
+        "text": "No"
+      },
+      {
+        "id": 3,
+        "text": "Maybe"
+      },
+      {
+        "id": 4,
+        "text": "What's a question...?"
+      }
+    ]
+  },
+  {
+    "text": "what up 2?",
+    "id": 2,
+    "answerId": 2,
+    "answers": [
+      {
+        "id": 1,
+        "text": "Yes"
+      },
+      {
+        "id": 2,
+        "text": "No"
+      },
+      {
+        "id": 3,
+        "text": "Maybe"
+      },
+      {
+        "id": 4,
+        "text": "What's a question...?"
+      }
+    ]
+  },
+  {
+    "text": "hello from 3?",
+    "id": 3,
+    "answerId": 3,
+    "answers": [
+      {
+        "id": 1,
+        "text": "Yes"
+      },
+      {
+        "id": 2,
+        "text": "No"
+      },
+      {
+        "id": 3,
+        "text": "Maybe"
+      },
+      {
+        "id": 4,
+        "text": "What's a question...?"
+      }
+    ]
+  }
+]
