@@ -1,6 +1,6 @@
 [
   {
-    "text": "Is this a question?",
+    "text": "question 1?",
     "id": 1,
     "answerId": 1,
     "answers": [
@@ -23,7 +23,7 @@
     ]
   },
   {
-    "text": "what up 2?",
+    "text": "question 2?",
     "id": 2,
     "answerId": 2,
     "answers": [
@@ -46,7 +46,7 @@
     ]
   },
   {
-    "text": "hello from 3?",
+    "text": "question 3?",
     "id": 3,
     "answerId": 3,
     "answers": [
