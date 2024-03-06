@@ -41,9 +41,7 @@ export default defineEventHandler(async (event) => {
     }
     return {
       isCorrect: true,
-      nextQuestion: trivia.find(
-        (question) => question.id === questionsList[currentQuestion + 1],
-      ),
+      nextQuestion: questionsList[currentQuestion + 1],
     };
   } catch (error) {
     return createError({

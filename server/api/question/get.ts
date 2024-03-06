@@ -1,3 +1,4 @@
+import { serverSupabaseClient } from "#supabase/server";
 import trivia from "../../resources/trivia.json";
 import type { SessionData } from "~/types";
 export default defineEventHandler(async (event) => {
@@ -14,8 +15,6 @@ export default defineEventHandler(async (event) => {
   if (currentQuestion >= questionsList.length) {
     return createError({ statusCode: 404, statusMessage: "no more questions" });
   }
-  const question = trivia.find(
-    (question) => question.id === questionsList[currentQuestion],
-  );
+  const question = questionsList[currentQuestion];
   return question;
 });

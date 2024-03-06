@@ -1,8 +1,16 @@
+import { serverSupabaseClient } from "#supabase/server";
 import { v4 as uuidGenerator } from "uuid";
 export default defineEventHandler(async (event) => {
   const user = await readBody(event);
   try {
-    const questionsList = await getQuestionsList();
+    const client = await serverSupabaseClient(event);
+    const { data: questionsList } = await client.from("questions").select("*");
+    if (!questionsList) {
+      return createError({
+        statusCode: 500,
+        statusMessage: "Something went wrong",
+      });
+    }
     const initialData = {
       user,
       score: 0,
