@@ -10,7 +10,7 @@ async function initTrivia() {
   try {
     await $fetch("/api/initTrivia", {
       method: "post",
-      body: { username: "nahar" },
+      body: { user: "nahar3" },
     });
     navigateTo("/trivia");
   } catch (error) {}

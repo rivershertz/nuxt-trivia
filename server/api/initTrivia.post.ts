@@ -1,7 +1,7 @@
 import { serverSupabaseClient } from "#supabase/server";
 import { v4 as uuidGenerator } from "uuid";
 export default defineEventHandler(async (event) => {
-  const user = await readBody(event);
+  const { user } = await readBody(event);
   try {
     const client = await serverSupabaseClient(event);
     const { data: questionsList } = await client.from("questions").select("*");

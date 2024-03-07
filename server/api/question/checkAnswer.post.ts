@@ -1,18 +1,17 @@
 import { SessionData } from "~/types";
-import trivia from "../../resources/trivia.json";
+import { serverSupabaseClient } from "#supabase/server";
 
 export default defineEventHandler(async (event) => {
-  // get sessionId from cookie
-  // get session data from storage
-  // check if the answer is correct
-  // if incorrect - return failed indicator
-  // if correct - bump currentQuestion
-  // return success indicator and next question
   try {
+    const sessionId = getCookie(event, "sessionId") as string;
+    const storage = useStorage();
+    const sessionData = <SessionData>await storage.getItem(sessionId);
+    const { currentQuestion, questionsList } = sessionData;
+
     const { questionId, answerId } = await readBody(event);
-    const isAnswerCorrect = trivia.find(
+    const isAnswerCorrect = questionsList.find(
       (question) =>
-        question.id === questionId && question.answerId === answerId,
+        question.id === questionId && question.answer_id === answerId,
     )
       ? true
       : false;
@@ -22,18 +21,21 @@ export default defineEventHandler(async (event) => {
         isCorrect: false,
       };
     }
-    const sessionId = getCookie(event, "sessionId") as string;
-    const storage = useStorage();
-    const sessionData = (await storage.getItem(sessionId)) as SessionData;
-    const { currentQuestion, questionsList } = sessionData;
 
     await storage.setItem(sessionId, {
       ...sessionData,
       currentQuestion: currentQuestion + 1,
     });
-    if (currentQuestion >= questionsList.length) {
-      // update DB with final score
+    const isLastQuestion = currentQuestion >= questionsList.length - 1;
+    if (isLastQuestion) {
+      const { user, score } = sessionData;
+      const client = await serverSupabaseClient(event);
+      await client
+        .from("scores")
+        .insert({ user, score }, { returning: "minimal" })
+        .single();
       await storage.removeItem(sessionId, { removeMeta: true });
+      deleteCookie(event, "sessionId");
       return {
         isCorrect: true,
         nextQuestion: null,

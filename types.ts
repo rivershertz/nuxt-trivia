@@ -1,8 +1,9 @@
-type Question = {
+export type Question = {
   id: number;
   text: string;
   answers: Answer[];
-  answerId: number;
+  answer_id: number;
+  created_at: Date;
 };
 
 type Answer = {
@@ -10,9 +11,9 @@ type Answer = {
   text: string;
 };
 
-type SessionData = {
+export type SessionData = {
   user: string;
   score: number;
   currentQuestion: number;
-  questionsList: number[];
+  questionsList: Question[];
 };
