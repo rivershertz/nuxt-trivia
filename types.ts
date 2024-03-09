@@ -17,3 +17,10 @@ export type SessionData = {
   currentQuestion: number;
   questionsList: Question[];
 };
+
+export type Score = {
+  created_at: Date;
+  id: number;
+  user: string;
+  score: number;
+};
