@@ -14,8 +14,8 @@ type Answer = {
 export type SessionData = {
   user: string;
   score: number;
-  currentQuestion: number;
-  questionsList: Question[];
+  current_question: number;
+  questions_list: Question[];
 };
 
 export type Score = {

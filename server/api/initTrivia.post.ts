@@ -1,5 +1,4 @@
 import { serverSupabaseClient } from "#supabase/server";
-import { v4 as uuidGenerator } from "uuid";
 export default defineEventHandler(async (event) => {
   const { user } = await readBody(event);
   try {
@@ -14,14 +13,22 @@ export default defineEventHandler(async (event) => {
     const initialData = {
       user,
       score: 0,
-      currentQuestion: 0,
-      questionsList,
+      current_question: 0,
+      questions_list: questionsList,
     };
     const sessionId = getCookie(event, "sessionId");
     if (!sessionId) {
-      const newSessionId = uuidGenerator();
-      const storage = useStorage();
-      await storage.setItem(newSessionId, initialData);
+      const { data: newSession, error } = await client
+        .from("sessions")
+        .insert(initialData)
+        .select();
+      if (error)
+        return createError({
+          statusCode: 500,
+          statusMessage: "Session wasn't created",
+          data: error,
+        });
+      const newSessionId = newSession[0].id;
       setCookie(event, "sessionId", newSessionId, {
         maxAge: 60 * 60,
         sameSite: true,
