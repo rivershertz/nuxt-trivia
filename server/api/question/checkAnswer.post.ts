@@ -1,4 +1,3 @@
-import { SessionData } from "~/types";
 import { serverSupabaseClient } from "#supabase/server";
 
 export default defineEventHandler(async (event) => {
@@ -35,7 +34,6 @@ export default defineEventHandler(async (event) => {
         .update({ current_question: currentQuestion + 1 })
         .eq("id", sessionId)
         .select();
-    console.log({ updateSessionResponse, updateSessionError });
 
     const isLastQuestion = currentQuestion >= questions_list.length - 1;
     if (isLastQuestion) {
@@ -47,7 +45,6 @@ export default defineEventHandler(async (event) => {
       const { data: deleteSessionResponse, error: deleteSessionError } =
         await client.from("sessions").delete().eq("id", sessionId);
       deleteCookie(event, "sessionId");
-      console.log({ deleteSessionResponse, deleteSessionError });
 
       return {
         isCorrect: true,

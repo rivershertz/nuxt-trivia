@@ -3,7 +3,10 @@ export default defineEventHandler(async (event) => {
   const { user } = await readBody(event);
   try {
     const client = await serverSupabaseClient(event);
-    const { data: questionsList } = await client.from("questions").select("*");
+    const { data: questionsList } = await client.rpc(
+      "get_random_questions_by_difficulty",
+    );
+
     if (!questionsList) {
       return createError({
         statusCode: 500,
